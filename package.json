@@ -12,9 +12,5 @@
   "dependencies": {
     "express": "4.19.2",
     "cookie-parser": "1.4.6"
-  },
-  "volta": {
-    "node": "0.12.18",
-    "npm": "2.15.12"
   }
 }

